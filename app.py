@@ -13,9 +13,11 @@ network = ZWaveNetwork(options)
 import time
 time.sleep(3)
 
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect, url_for, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/')
 def one_button():
@@ -32,6 +34,37 @@ def one_button():
         return f"<h1>Lights On. <p> <a href='/off'>Turn them Off</a></p></h1>"
 
     return f"<h1>Lights Off. <p> <a href='/on'>Turn them On</a></p></h1>"
+
+@app.route('/state', methods=['GET', 'POST'])
+def get_state():
+    if request.method == 'GET':
+        node_list = list(network.nodes.keys())
+        ON = False
+        for node in node_list:
+            switches = list(network.nodes[node].get_switches().keys())
+            if switches:
+                state = network.nodes[node].get_switch_state(switches[0])
+                if state:
+                    ON = True
+                    continue
+        if ON:
+            return jsonify({'state': 'ON'})
+
+        return jsonify({'state': 'OFF'})
+    
+    change = request.json
+
+    node_list = list(network.nodes.keys())
+    for node in node_list:
+        switches = list(network.nodes[node].get_switches().keys())
+        if switches:
+            if change['state'] == 'ON':
+                network.nodes[node].set_switch(switches[0], True)
+            else:
+                network.nodes[node].set_switch(switches[0], False)
+    time.sleep(2)
+    return jsonify(change)
+    
 
 
 @app.route('/off')
