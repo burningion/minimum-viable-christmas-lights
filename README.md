@@ -1,5 +1,7 @@
 # Minimum Viable Christmas Lights
 
+![Christmas Gif](https://i.giphy.com/media/1i5c6D15vpmeE3q4bA/giphy.webp)
+
 My Christmas lights controlled via Z-Wave and a Flask frontend for my NVIDIA Jetson Nano.
 
 This loops over each node on a Z-Wave network, and checks to see if it's a switch. 
