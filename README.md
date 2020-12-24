@@ -2,7 +2,7 @@
 
 ![Christmas Gif](https://i.giphy.com/media/1i5c6D15vpmeE3q4bA/giphy.webp)
 
-My Christmas lights controlled via a Z-Wave stick and an NVIDIA Jetson Nano.
+My Christmas lights controlled via a Z-Wave stick and an NVIDIA Jetson Nano. There is an accompanying blog post at [Make Art with Python](https://www.makeartwithpython.com/blog/minimum-viable-christmas-lights/).
 
 The UI is a Flask frontend, and / or a React Native App for iOS / Android.
 
@@ -11,6 +11,8 @@ This loops over each node on a Z-Wave network, and checks to see if it's a switc
 If a network node is a switch, check the state. 
 
 If it's On, give the option to turn Off, and vice versa.
+
+![Architecture diagram](https://github.com/burningion/minimum-viable-christmas-lights/raw/main/react-native-christmas1.png)
 
 # Running the Server
 
